@@ -1,29 +1,27 @@
-import sys, os
-import csv
-import tokenize
-import cStringIO
+string = '"age","coun,try","location"'
 
+token_begin = False
+token_end = False
+is_string = False
 
+print string + '\n'
 
-# replace with system argv
-# csvfile = open("example.csv")
+def parse(input, token_begin, token_end, is_string):
+    for i in string:
+        if i == '"':
+            return token_begin == True
+            return is_string == False
+            print '\b' + i,
+        elif i != '"':
+            return is_string == True
+            print '\b' + i,
+        elif i == ',' and token_begin == True:
+            print '\b',
+        #elif i == '"':
+            #pass
+        elif i == '"' and token_begin == True and is_string == True:
+            return token_end == True
+            print '\b' + i,
+            print '\n'
 
-string = '"name","jim","john","tom"'
-# function to get next string
-def get_next_target(page):
-    start_link = page.find('"')
-    if start_link == -1:
-        return "Invalid String!"
-    start_point = page.find('"', start_link)
-    end_point = page.find('"', start_point + 1)
-    url = page[start_point + 1:end_point]
-    return url, end_point
-
-'''
-def get_all_target(page):
-    while True:
-
-'''
-
-link = get_next_target(string)
-print link
+print parse(string,False,False,False)

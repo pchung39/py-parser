@@ -55,6 +55,8 @@ def parse(token):
             # if comma is outside token, comma separating token
             elif i == ',':
                 print '\n',
+            else:
+                print '\b' + i,
 
 
         elif is_token == True:
@@ -62,7 +64,7 @@ def parse(token):
             if i == '"':
                 print '\b' + i,
                 is_token = False
-            elif i == '\"':
+            elif i == '\':
                 print '\b' + i
             elif i == ',':
                 print '\b' + i,

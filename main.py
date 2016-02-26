@@ -1,5 +1,5 @@
 '''
-string = '"age",",coun\",try,","location"'
+string = '"age",",coun\,try,","location"'
 
 
 #is_string = False
@@ -42,27 +42,31 @@ def parse(token):
 print parse(string)
 '''
 
-string = '"age",",coun\",try,","location"'
+string = '"age",",coun\,try,","location"'
 
 def parse(token):
     is_token = False
     for i in token:
         if is_token == False:
+            # if quote starts a new token
             if i == '"':
+                print '\b' + i,
                 is_token = True
-                print '\b',
-            elif i == '\\':
-                print i,
+            # if comma is outside token, comma separating token
+            elif i == ',':
+                print '\n',
+
+
+        elif is_token == True:
+            # if quote ends a token
+            if i == '"':
+                print '\b' + i,
+                is_token = False
+            elif i == '\"':
+                print '\b' + i
             elif i == ',':
                 print '\b' + i,
-        elif is_token == True:
-            if i == '"':
-                print '\b',
-                is_token = False
-            elif i == ',':
-                print '\n'
-                is_token = False
             else:
-                print i
+                print i,
 
-print parse(string)
+parse(string)

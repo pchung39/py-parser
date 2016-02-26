@@ -1,3 +1,4 @@
+'''
 string = '"age",",coun\",try,","location"'
 
 
@@ -37,5 +38,31 @@ def parse(token):
             #token_end == True
         #elif i == ',' and token_end == True:
             #print '\b' + '\n'
+
+print parse(string)
+'''
+
+string = '"age",",coun\",try,","location"'
+
+def parse(token):
+    is_token = False
+    for i in token:
+        if is_token == False:
+            if i == '"':
+                is_token = True
+                print '\b',
+            elif i == '\\':
+                print i,
+            elif i == ',':
+                print '\b' + i,
+        elif is_token == True:
+            if i == '"':
+                print '\b',
+                is_token = False
+            elif i == ',':
+                print '\n'
+                is_token = False
+            else:
+                print i
 
 print parse(string)

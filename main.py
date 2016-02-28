@@ -47,6 +47,7 @@ string = '"age",",coun\,try,","location"'
 def parse(token):
     is_token = False
     for i in token:
+
         if is_token == False:
             # if quote starts a new token
             if i == '"':
@@ -64,11 +65,11 @@ def parse(token):
             if i == '"':
                 print '\b' + i,
                 is_token = False
-            elif i == '\':
-                print '\b' + i
+            elif i == '\\':
+                print '\b' + i,
             elif i == ',':
                 print '\b' + i,
             else:
-                print i,
+                print '\b' + i,
 
 parse(string)

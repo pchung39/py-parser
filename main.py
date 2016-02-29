@@ -42,34 +42,40 @@ def parse(token):
 print parse(string)
 '''
 
-string = '"age",",coun\,try,","location"'
+string = r'"age",ab\"c,123,",coun\",try,","location"'
 
 def parse(token):
+    numbers = [0,1,2,3,4,5,6,7,8,9]
     is_token = False
+    previous_character_is_escape = False
+    print_statement = '\b' + i,
     for i in token:
-
+        #print '%s,%s' % (is_token,previous_character_is_escape)
         if is_token == False:
-            # if quote starts a new token
             if i == '"':
                 print '\b' + i,
                 is_token = True
-            # if comma is outside token, comma separating token
+            elif i == numbers:
+                print '\b' + i,
+                is_token = True
             elif i == ',':
                 print '\n',
             else:
                 print '\b' + i,
 
-
         elif is_token == True:
-            # if quote ends a token
-            if i == '"':
+            if i == '\\':
+                print '\b' + i,
+                previous_character_is_escape = True
+            elif previous_character_is_escape == True and i == '"':
+                print '\b' + i,
+                previous_character_is_escape = False
+            elif previous_character_is_escape == False and i == '"':
                 print '\b' + i,
                 is_token = False
-            elif i == '\\':
-                print '\b' + i,
             elif i == ',':
                 print '\b' + i,
+                is_token = False
             else:
                 print '\b' + i,
-
 parse(string)

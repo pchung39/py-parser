@@ -1,3 +1,5 @@
+import re
+
 '''
 string = '"age",",coun\,try,","location"'
 
@@ -40,42 +42,59 @@ def parse(token):
             #print '\b' + '\n'
 
 print parse(string)
+23,",coun\",try,","location"
 '''
 
 string = r'"age",ab\"c,123,",coun\",try,","location"'
 
 def parse(token):
-    numbers = [0,1,2,3,4,5,6,7,8,9]
+    #chars = set('0123456789abcdefghijklmnopqrstuvwxyz')
+    regex = re.compile('^[a-zA-Z0-9_]+$')
     is_token = False
     previous_character_is_escape = False
-    print_statement = '\b' + i,
+    no_quote_value = False
     for i in token:
-        #print '%s,%s' % (is_token,previous_character_is_escape)
+        #print '%s,%s,%s' % (is_token,previous_character_is_escape,no_quote_value)
         if is_token == False:
             if i == '"':
                 print '\b' + i,
+                #print "1"
                 is_token = True
-            elif i == numbers:
+            #need to change so that it recognizes if number or string not quote
+            if regex.match(i):
                 print '\b' + i,
+                #print "2"
                 is_token = True
+                no_quote_value = True
             elif i == ',':
                 print '\n',
+                #print "3"
             else:
                 print '\b' + i,
+                #print "4"
 
         elif is_token == True:
             if i == '\\':
                 print '\b' + i,
+                #print "5"
                 previous_character_is_escape = True
             elif previous_character_is_escape == True and i == '"':
                 print '\b' + i,
+                #print "6"
                 previous_character_is_escape = False
             elif previous_character_is_escape == False and i == '"':
                 print '\b' + i,
+                #print "7"
                 is_token = False
-            elif i == ',':
+            elif no_quote_value == True and i == ',':
+                print '\n',
+                #print "8"
+                is_token = False
+                no_quote_value = False
+            elif no_quote_value == False and i == ',':
                 print '\b' + i,
-                is_token = False
+                #print "9"
             else:
                 print '\b' + i,
+                #print "10"
 parse(string)

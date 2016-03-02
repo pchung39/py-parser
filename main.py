@@ -48,8 +48,7 @@ print parse(string)
 string = r'"age",ab\"c,123,",coun\",try,","location"'
 
 def parse(token):
-    #chars = set('0123456789abcdefghijklmnopqrstuvwxyz')
-    regex = re.compile('^[a-zA-Z0-9_]+$')
+    #regex = re.compile('^[a-zA-Z0-9_]+$')
     is_token = False
     previous_character_is_escape = False
     no_quote_value = False
@@ -58,17 +57,16 @@ def parse(token):
         if is_token == False:
             if i == '"':
                 print '\b' + i,
-                #print "1"
+                print "1"
                 is_token = True
-            #need to change so that it recognizes if number or string not quote
-            if regex.match(i):
-                print '\b' + i,
-                #print "2"
-                is_token = True
-                no_quote_value = True
+                no_quote_value == False
             elif i == ',':
                 print '\n',
-                #print "3"
+                #print "2"
+            elif no_quote_value == True:
+                print '\b' + i,
+                print "3"
+                is_token = True
             else:
                 print '\b' + i,
                 #print "4"
@@ -80,20 +78,20 @@ def parse(token):
                 previous_character_is_escape = True
             elif previous_character_is_escape == True and i == '"':
                 print '\b' + i,
-                #print "6"
+                print "6"
                 previous_character_is_escape = False
             elif previous_character_is_escape == False and i == '"':
                 print '\b' + i,
-                #print "7"
+                print "7"
                 is_token = False
+                no_quote_value = True
             elif no_quote_value == True and i == ',':
                 print '\n',
-                #print "8"
+                print "8"
                 is_token = False
-                no_quote_value = False
             elif no_quote_value == False and i == ',':
                 print '\b' + i,
-                #print "9"
+                print "9"
             else:
                 print '\b' + i,
                 #print "10"

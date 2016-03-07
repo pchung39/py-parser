@@ -8,7 +8,6 @@ def parse(text):
     is_token = False
     previous_character_is_escape = False
     no_quote_value = True
-    end_of_line = False
 
     row_counter = 2
 
@@ -24,7 +23,7 @@ def parse(text):
                     elif i == '\n':
                         print '\n'
                     elif i == ',':
-                        print '\n',
+                        print '\n' + '\b',
                     elif no_quote_value == True:
                         print '\b' + i,
                         is_token = True
@@ -39,8 +38,11 @@ def parse(text):
                     # for line delimiter
                     elif i == '\n':
                         print '\n'
+                        print "This is row %i" % (row_counter)
+                        row_counter += 1
                         is_token = False
-                    elif previous_character_is_escape == True and i != 'n':
+                    elif i == '\{}'.format()
+                    elif previous_character_is_escape == True:
                         print '\b' + i,
                         previous_character_is_escape = False
                     elif previous_character_is_escape == False and i == '"':
@@ -48,11 +50,11 @@ def parse(text):
                         is_token = False
                         no_quote_value = True
                     elif no_quote_value == True and i == ',':
-                        print '\n',
+                        print '\n' + '\b',
                         is_token = False
                     elif no_quote_value == False and i == ',':
                         print '\b' + i,
                     else:
                         print '\b' + i,
 
-parse('example.csv')
+parse('SampleCSVFile.csv')

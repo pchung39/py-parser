@@ -1,53 +1,67 @@
+import io
 
 def parse(text):
     #states
     is_token = False
     previous_character_is_escape = False
     no_quote_value = True
+    end_of_line = False
 
-    with open(text) as f:
-        for l in f:
-            for i in l:
-                #print '%s,%s,%s' % (is_token,previous_character_is_escape,no_quote_value)
+    row_counter = 2
+
+    with io.open(text,'rb',newline=None) as f:
+        while 1:
+            byte = f.read(1)
+            for i in byte:
                 if is_token == False:
                     if i == '"':
                         print '\b' + i,
-                        print "1"
+                        print '1'
                         is_token = True
                         no_quote_value = False
+                    elif i == '\n':
+                        print '\n'
+                        print '2'
                     elif i == ',':
-                        print '\n',
-                        print "2"
+                        print '\n' + '\b',
+                        print '3'
                     elif no_quote_value == True:
-                        print '\b' + i,
-                        print "3"
+                        print '\b',
+                        print '4'
                         is_token = True
                     else:
                         print '\b' + i,
-                        print "4"
+                        print '5'
+
 
                 elif is_token == True:
                     if i == '\\':
                         print '\b' + i,
-                        print "5"
+                        print '6'
                         previous_character_is_escape = True
-                    elif previous_character_is_escape == True and i == '"':
+                    # for line delimiter
+                    elif i == '\n':
+                        print '\n'
+                        print '7'
+                        is_token = False
+                    elif previous_character_is_escape == True and i != 'n':
                         print '\b' + i,
-                        print "5"
+                        print '8'
                         previous_character_is_escape = False
                     elif previous_character_is_escape == False and i == '"':
                         print '\b' + i,
-                        print "5"
+                        print '9'
                         is_token = False
                         no_quote_value = True
                     elif no_quote_value == True and i == ',':
-                        print '\n',
-                        print "6"
+                        print '\n' + '\b',
+                        print '10'
                         is_token = False
                     elif no_quote_value == False and i == ',':
                         print '\b' + i,
-                        print "7"
+                        print '11'
                     else:
                         print '\b' + i,
-                        print "8"
+                        print '12'
+
 parse('example.csv')

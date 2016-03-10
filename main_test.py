@@ -15,7 +15,7 @@ def parse(text):
         while True:
             byte = f.read(1)
             for i in byte:
-                print "%s,%s" % (quote_value,no_quote_value)
+                #print "%s,%s" % (quote_value,no_quote_value)
                 if is_token == False:
                     if i == '"':
                         print '\b' + i,
@@ -45,6 +45,10 @@ def parse(text):
                         print "This is row %i" % (row_counter)
                         row_counter += 1
                         is_token = False
+                    # if token is not a quoted value but ends with quotes, and there is no escape character
+                    elif no_quote_value == True and previous_character_is_escape == False and i == '"':
+                        print '\n' + "This is a not a valid token, this is not a quoted value but there is an ending quote"
+                        return False
                     # builds off previous_character_is_escape and captures any escape sequence
                     elif previous_character_is_escape == True:
                         print '\b' + i,
@@ -55,16 +59,12 @@ def parse(text):
                         no_quote_value = True
                         quote_value = False
                         is_token = False
-                    # rework this state, this is the same as two loops below
-                    elif no_quote_value == True and previous_character_is_escape == False and i == ',':
-                        print '\n' + "This is not a valid token"
-                        return False
                     # if token starts as a quote but ends without quotes
                     elif quote_value == True and previous_character_is_escape == False and i == ',':
-                        print '\n' + "This is not a valid token"
+                        print '\n' + "This is not a valid token, there should be a quote at the end of this token"
                         return False
-                    # differentiating between commas that should be considered part of the string and those that should not be
-                    elif no_quote_value == True and i == ',':
+                    # this comma marks the end of a non quoted token, this invokes a newline
+                    elif no_quote_value == True and previous_character_is_escape == False and i == ',':
                         print '\n' + '\b',
                         no_quote_value = False
                         is_token = False
@@ -74,3 +74,9 @@ def parse(text):
                         print '\b' + i,
 
 parse('example.csv')
+
+'''
+def quote_val(byte):
+
+def non_quote_val(byte):
+'''

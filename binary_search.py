@@ -2,7 +2,7 @@ import os
 import sys
 
 lister = [1,2,3,4,5,6,7,8,9,10]
-target = 2
+target = 7
 
 def max_min(list, num):
     min = 0
@@ -13,8 +13,8 @@ def max_min(list, num):
 def binary_search(list, small, big, num):
     min = small # 0
     max = big # 10
-    middle = (max + min/2) - 1 # 5 
-    
+    middle = ((max + min)/2) - 1 # 5 
+    print min, max, middle
  
     if list[middle] == num:
         print "You found it! %r " % target

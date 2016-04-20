@@ -76,25 +76,50 @@ class LinkedList(object):
             prev_node = current_node
             current_node = current_node.next_item
 
+    def sort(self):
+        node = self.head
+        next_node = node.get_next()
+        while node and next_node != None:
+            if node > next_node:
+                node, next_node = next_node, node
+            return node, next_node
+
+
+    def sort_list(self):
+        if self.head and self.head.next_item:
+            i = self.head
+            while i.next_item:
+                selected = i
+                j = i.next_item
+                while j:
+                    if j.data < selected.data:
+                        selected = j
+                    j = j.next_item
+                if not selected == i:
+                    i.data, selected.data = selected.data, i.data
+                i = i.next_item
 
 
 
-
-
-
-
-
-
-
-
-
-
+'''
+        while True:
+            if node < next_node:
+                node, next_node = next_node, node
+                next_node.set_next(node)
+                node.set_next(next_node + 1)
+            node = node.get_next()
+            next_node = node.get_next()
+        print node, next_node
+            node = next_node
+            next_node = node.next_item
+'''
 myList = LinkedList()
 myList.add(1)
 myList.add(2)
 myList.add(3)
 myList.add(4)
 myList.add(5)
-myList.remove(2)
+myList.sort_list()
 myList.print_list()
-myList.size()
+
+

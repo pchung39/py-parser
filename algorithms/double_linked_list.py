@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 class Item(object):
-    def __init__(self, data, next_item = None):
+    def __init__(self, data, next_item = None, previous_item = None):
         self.data = data
         self.next_item = next_item
+        self.previous_item = previous_item
 
     def get_item(self):
         return self.data
@@ -12,8 +13,14 @@ class Item(object):
     def set_next(self, setnext):
         self.next_item = setnext
 
+    def set_previous(self, setprevious):
+        self.previous_item = setprevious
+
     def get_next(self):
         return self.next_item
+
+    def get_previous(self):
+        return self.previous_item
 
 class LinkedList(object):
     def __init__(self):
@@ -51,19 +58,22 @@ class LinkedList(object):
             item_insert = Item(item, self.head)
             self.head = item_insert
             return
-        previous = self.head
-        current = self.head.get_next()
+        current = self.head
+        next = self.head.get_next()
         index = 1
         while index != lpos:
+            current = next
+            next = current.get_next()
             index += 1
-            previous = current
-            current = current.get_next()
+
             if current == None:
                 return None
 
-        item_insert = Item(item, current)
-        previous.set_next(item_insert)
+        item_insert = Item(item, next.data)
+        item_insert.set_previous(current.data)
+        next.set_previous(item_insert.data)
 
+    # need to add previous logic
     def remove(self,item):
         current_node = self.head
         prev_node = None
@@ -98,39 +108,12 @@ class LinkedList(object):
                 if not selected == i:
                     i.data, selected.data = selected.data, i.data
                 i = i.next_item
-        self.sort_pointers()
 
-    def sort_pointers(self):
-        i = self.head
-        j = i.next_item
-
-        while i or j != None:
-            i.set_next(j)
-            i = i.next_item()
-            j = j.next_item()
-
-
-
-'''
-        while True:
-            if node < next_node:
-                node, next_node = next_node, node
-                next_node.set_next(node)
-                node.set_next(next_node + 1)
-            node = node.get_next()
-            next_node = node.get_next()
-        print node, next_node
-            node = next_node
-            next_node = node.next_item
-'''
 myList = LinkedList()
 myList.add(1)
 myList.add(2)
 myList.add(3)
 myList.add(4)
 myList.add(5)
-myList.sort_list()
-myList.sort_pointers()
+myList.insert(8,3)
 myList.print_list()
-
-

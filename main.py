@@ -14,6 +14,10 @@ def parse(file):
     with io.open(file,'rb',newline=None) as f:
         while 1:
             byte = f.read(1)
+
+            if byte == '':
+                break
+
             for i in byte:
 
                 if is_token == False:
